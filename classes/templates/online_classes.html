@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Online Classes</title>
+
+    <!-- Load the static files tag -->
+    {% load static %}
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Your custom static CSS -->
+    <link rel="stylesheet" href="{% static 'css/online_classes.css' %}">
+
+    <style>
+        /* Inline CSS (can move this to 'online_classes.css') */
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f8f9fa;
+            margin: 0;
+            padding: 0;
+        }
+        .header {
+            background-color: #007bff;
+            color: white;
+            padding: 10px 0;
+            text-align: center;
+        }
+        .form-container {
+            margin-top: 50px;
+            padding: 30px;
+            background-color: #ffffff;
+            border-radius: 5px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+        .form-container h2 {
+            margin-bottom: 20px;
+        }
+        .form-container .form-group {
+            margin-bottom: 15px;
+        }
+        .form-container button {
+            background-color: #007bff;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+            width: 100%;
+        }
+        .form-container button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Header Section -->
+    <div class="header">
+        <h1>Welcome to Online Classes</h1>
+    </div>
+
+    <!-- Form Section -->
+    <div class="container form-container">
+        <h2>Enroll in a Class</h2>
+        <form id="classForm">
+            {% csrf_token %}
+
+            <!-- Class Title Dropdown -->
+            <div class="form-group">
+                <label for="class_title">Class Title</label>
+                <select id="class_title" name="class_title" class="form-control" required>
+                    <option value="">Select a language</option>
+                    <option value="japanese">Japanese</option>
+                    <option value="french">French</option>
+                    <option value="spanish">Spanish</option>
+                    <option value="german">German</option>
+                </select>
+            </div>
+
+            <!-- Submit Button -->
+            <button type="submit">Submit</button>
+        </form>
+
+        <!-- JavaScript to handle redirection based on class selection -->
+        <script>
+            document.getElementById("classForm").addEventListener("submit", function (event) {
+                event.preventDefault(); // Prevent the default form submission behavior
+
+                var selectedClass = document.getElementById("class_title").value;
+
+                // Define the links for each class
+                var classLinks = {
+                    "japanese": "https://us04web.zoom.us/j/73272421002?pwd=EjU8hnxYVbgWrbmsgx2H87SydgTbTu.1",
+                    "french": "https://us04web.zoom.us/j/77799086169?pwd=s3DH74PdBFLNbSwd7aQzljvashOeni.1",
+                    "spanish": "https://us04web.zoom.us/j/78488482106?pwd=IArDSS9CcwWvKT3vHrditTXiuI8xWn.1",
+                    "german": "https://us04web.zoom.us/j/75618528373?pwd=TcK7VQxogIcff8qTcf0HzjnOtHgugM.1"
+                };
+
+                // Check if a valid class is selected
+                if (selectedClass && classLinks[selectedClass]) {
+                    // Redirect to the respective class link
+                    window.location.href = classLinks[selectedClass];
+                } else {
+                    alert("Please select a valid class.");
+                }
+            });
+        </script>
+    </div>
+
+</body>
+</html>
